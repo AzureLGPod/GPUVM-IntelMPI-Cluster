@@ -43,7 +43,7 @@ $ ./install_tensorflow_1.13.1_u16.sh
 ```bash
 $ ./install_horovod_0.16.1_u16.sh 
 ```
-Note: HOROVOD_GPU_ALLREDUCE=NCCL works on the distributed workload, sits within the same node. 
+Note: `HOROVOD_GPU_ALLREDUCE=NCCL` works on the distributed workload, which is located within the same node. 
 If workload needs to be distributed beyond a single node and dealing with Intel MPI, this option must not be given. 
 For multi-GPU on multi-node enviroment, install with horovod with following command.
 ```bash 
