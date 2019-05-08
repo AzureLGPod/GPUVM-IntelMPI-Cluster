@@ -1,5 +1,5 @@
 # Azure Compute NC24rs_v3 configuration steps
-These commands are targed for Ubuntu 16.04 on NC24rs_v3, which has 4 v100 Tesla cards installed with Infiniband support.
+These commands are targed for Ubuntu 16.04 on NC24rs_v3, which has 4 v100 Tesla cards installed with FDR Infiniband support.
 This Infiniband supports RDMA and IP over IB is not supported. The RDMA is supported by Intel MPI and not by OpenMPI.
 
 ## Prerequisites. 
@@ -24,7 +24,7 @@ $ ./install_cudnn_7.5.1.10_for_cuda10.0_u16.sh
 ```
 
 4. Install NVIDIA Docker v2, give user permission to execute docker by assigning to docker group, and finally logoff the user.
-   You need to login again to make the group assignment to take effect.
+   You need to login back again to make the group assignment to take effect.
 ```bash
 $ ./install_nvidiadocker2_u16_1.sh
 ```
@@ -43,14 +43,14 @@ $ ./install_tensorflow_1.13.1_u16.sh
 ```bash
 $ ./install_horovod_0.16.1_u16.sh 
 ```
-Note: HOROVOD_GPU_ALLREDUCE=NCCL works on the distributed workload is within the same node. 
-If workload needs to be distributed beyond a single node with Intel MPI, this option must not be given. 
-For multi-GPU with multi-node enviroment, install with following command.
+Note: HOROVOD_GPU_ALLREDUCE=NCCL works on the distributed workload, sits within the same node. 
+If workload needs to be distributed beyond a single node and dealing with Intel MPI, this option must not be given. 
+For multi-GPU on multi-node enviroment, install with horovod with following command.
 ```bash 
 HOROVOD_WITH_TENSORFLOW=1 pip install --no-cache-dir horovod==0.16.1 
 ```
 
-8. Install Intel MPI 2017.2.174 
+8. Install Intel MPI 2017.2.174
 ```bash
 $ ./install_intel_mpi_2017.2.174.sh 
 ```
