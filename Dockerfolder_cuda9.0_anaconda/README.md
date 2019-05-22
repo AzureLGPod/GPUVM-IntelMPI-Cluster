@@ -1,5 +1,6 @@
 # CUDA 9.0 based Docker image for Ubuntu 16.04
 This Docker image is intended for NC24rs_v3 with Intel MPI to support Horovod for TensorFlow.
+This image will install Anaconda5 5.0.1 as package manager and doesn't create virtual environment. 
 
 ## Docker image configuration
 Please follow from step 1 through 4 on the nodes, where the nodes are participating in same cluster.
