@@ -47,10 +47,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgra
         ibverbs-utils\
         ibutils \
         numactl \
-	fakeroot \
-	dpkg-dev \
+        fakeroot \
+        dpkg-dev \
         openssh-client \
-        openssh-server
+        openssh-server  \
+        # Merging with application dependencies
+        keras \ 
+        jupyter \
+        ipykernel \
+        toolz \
+        align==0.0.5 \ 
+        boto==2.49.0 \ 
+        boto3==1.9.119 \ 
+        botocore==1.12.119 \ 
+        bz2file==0.98 \ 
+        chardet==3.0.4 \ 
+        docutils==0.14 \ 
+        gensim==3.7.1 \ 
+        idna==2.8 \ 
+        jmespath==0.9.4 \ 
+        nltk==3.4 \ 
+        pandas==0.24.2 \ 
+        Pillow==5.4.1 \ 
+        requests==2.21.0 \ 
+        ruamel.yaml==0.15.89 \ 
+        s3transfer==0.2.0 \ 
+        scikit-learn==0.20.3 \ 
+        singledispatch==3.4.0.3 \ 
+        sklearn==0.0 \ 
+        smart-open==1.8.0 \ 
+        urllib3==1.24.1 \ 
+        XlsxWriter==1.1.6
 
 # Intel MPI 2017.2.174 runtime 
 # COPY l_mpi_2017.2.174.tgz /tmp
@@ -104,8 +131,7 @@ RUN cd /tmp \
 
 ENV PATH /root/anaconda3/bin:$PATH 
 
-RUN    conda install python=3.6 -y \ 
-    && conda install tensorflow-gpu=${TENSORFLOW_VERSION} -y \ 
+RUN    conda install tensorflow-gpu=${TENSORFLOW_VERSION} -y \ 
     && conda install imageio=2.5.0 -y \ 
     && conda install scikit-image=0.14.2 -y \ 
     && conda install opencv=3.4.2 -y 
@@ -118,31 +144,6 @@ RUN PY=$(echo ${PYTHON_VERSION} | sed s/\\.//); \
         pip install http://download.pytorch.org/whl/cu90/torch-${PYTORCH_VERSION}-cp${PY}-cp${PY}mu-linux_x86_64.whl; \
     fi; \
     pip install torchvision
-
-# Install Dependencies
-RUN pip install --no-cache-dir keras jupyter ipykernel toolz \
-    align==0.0.5 \ 
-    boto==2.49.0 \ 
-    boto3==1.9.119 \ 
-    botocore==1.12.119 \ 
-    bz2file==0.98 \ 
-    chardet==3.0.4 \ 
-    docutils==0.14 \ 
-    gensim==3.7.1 \ 
-    idna==2.8 \ 
-    jmespath==0.9.4 \ 
-    nltk==3.4 \ 
-    pandas==0.24.2 \ 
-    Pillow==5.4.1 \ 
-    requests==2.21.0 \ 
-    ruamel.yaml==0.15.89 \ 
-    s3transfer==0.2.0 \ 
-    scikit-learn==0.20.3 \ 
-    singledispatch==3.4.0.3 \ 
-    sklearn==0.0 \ 
-    smart-open==1.8.0 \ 
-    urllib3==1.24.1 \ 
-    XlsxWriter==1.1.6
 
 # Install Horovod, temporarily using CUDA stubs
 RUN ldconfig /usr/local/cuda-9.0/targets/x86_64-linux/lib/stubs && \
@@ -162,7 +163,8 @@ RUN git clone https://github.com/tensorflow/benchmarks && \
 
 # Update ib0 ip address with eth1 address in /etc/dat.conf 
 COPY update_ib0_ip.sh /root/update_ib0_ip.sh
-RUN chmod +x /root/update_ib0_ip.sh
+RUN chmod +x /root/update_ib0_ip.sh \
+    && echo "./update_ib0_ip.sh" >> ~/.bashrc 
 
 WORKDIR "/benchmarks"
 
