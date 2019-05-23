@@ -101,6 +101,7 @@ RUN cd /tmp \
     && aria2c -x 8 -s 8 https://repo.anaconda.com/archive/Anaconda3-5.0.1-Linux-x86_64.sh \ 
     && bash Anaconda3-5.0.1-Linux-x86_64.sh -b -p $HOME/anaconda3 \ 
     && echo "export PATH=/root/anaconda3/bin:$PATH" >> ~/.bashrc \
+    && /bin/bash -c "source ~/.bashrc" \
     && conda install tensorflow-gpu=${TENSORFLOW_VERSION} -y \ 
     && conda install imageio=2.5.0 -y \ 
     && conda install scikit-image=0.14.2 -y \ 
