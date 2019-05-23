@@ -95,7 +95,7 @@ RUN ln -s /usr/bin/python${PYTHON_VERSION} /usr/bin/python
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
     rm get-pip.py
-
+ENV PATH /root/anaconda3/bin:$PATH
 # Install Anaconda
 RUN cd /tmp \ 
     && aria2c -x 8 -s 8 https://repo.anaconda.com/archive/Anaconda3-5.0.1-Linux-x86_64.sh \ 
